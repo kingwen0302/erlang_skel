@@ -1,0 +1,21 @@
+%% ===========================================================================
+%% @doc
+%% TODO 模块描述.
+%% @end
+%% ===========================================================================
+-module($MODULENAME).
+-author(zhaoming).
+-version(1.0).
+-date($DATE).
+
+-export([]).
+
+check([]) -> true;
+check([Chk|L]) ->
+    case do_check(Chk) of
+        {false, ErrCode} -> {false, ErrCode};
+        true -> check(L)
+    end.
+
+%% TODO 真正的检测逻辑
+do_check(_) -> {false, -1}.
