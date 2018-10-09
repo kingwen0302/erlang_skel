@@ -17,6 +17,10 @@ if !exists('g:erlang_skel_replace')
 	let g:erlang_skel_replace = 1
 endif
 
+if !exists('g:erlang_skel_coding')
+    let g:erlang_skel_coding = 'utf-8'
+endif
+
 if !exists('g:erlang_skel_dir')
 	let g:erlang_skel_dir = expand('<sfile>:p:h') . '/erlang_skels'
 endif
@@ -52,6 +56,8 @@ function s:LoadSkeleton(skel_name)
     try | call s:SubstituteField('year', strftime("%Y")) | catch | | endtry
     try | call s:SubstituteField('author', g:erlang_skel_author) | catch | | endtry
     try | call s:SubstituteField('mail', g:erlang_skel_mail) | catch | | endtry
+    try | call s:SubstituteField('coding', g:erlang_skel_coding) | catch | | endtry
+
 	if g:erlang_skel_replace
 		normal gg
 		delete
@@ -66,6 +72,11 @@ endfunction
 
 function s:ErlangTemplete(...)
     let g:erlang_skel_replace = a:1
+    try 
+        " 去除a:3 两边的双引号
+        let g:erlang_skel_coding = strpart(a:3, 1, strlen(a:3) - 2)
+    catch
+    endtry
     silent call s:LoadSkeleton(a:2)
 endfunction
 
